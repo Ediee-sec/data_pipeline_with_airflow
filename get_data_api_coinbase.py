@@ -1,5 +1,4 @@
 import requests
-import  pandas as pd
 
 #Faz a consulta na API de cotação para fazer a conversão do dolar para o real de forma atualizada
 api_cot = "https://economia.awesomeapi.com.br/json/last/USD-BRL"
@@ -19,29 +18,23 @@ dic_df = \
 
 # Está função retorna todas as criptomoedas da Coinbase, retorna apenas o nome da criptomeda
 def listCoins():
-    url = f"https://api.exchange.coinbase.com/products"
+    url = "https://api.exchange.coinbase.com/products"
     headers = {"Accept": "application/json"}
     response = requests.get(url, headers=headers)
     ls = response.json()
 
     coin = []
 
-
-    for i in range(len(ls)):
-        if "USD" in ls[i]['id']:
-            id = ls[i]['id']
-            uri = f"https://api.exchange.coinbase.com/products/{id}"
+    for item in ls:
+        if "USD" in item['id']:
+            coin_id = item['id']
+            uri = f"https://api.exchange.coinbase.com/products/{coin_id}"
             req = requests.get(uri, headers=headers)
             prod = req.json()
 
-            #Validação,
-            # 1 - Verifica se o status da moeda é online,
-            # 2 - Verifica se a moeda já tem preço listado,
-            # 3 - Verifica se o retorno do request deu sucesso
-            # Se as 3 validações for verdadeiro inicia o processo de Transform e appenda apenas a moeda no dicionário dic_df
-            if prod['status'] == 'online' and prod['cancel_only'] == False and req.status_code == 200:
-                coin.append(id)
-                etl_id = id.replace('-', '').replace('USD', '')
+            if prod.get('status') == 'online' and not prod.get('cancel_only') and req.status_code == 200:
+                coin.append(coin_id)
+                etl_id = coin_id.replace('-', '').replace('USD', '')
                 dic_df['Moeda'].append(etl_id)
 
     return coin
