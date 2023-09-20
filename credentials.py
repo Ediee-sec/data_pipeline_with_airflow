@@ -3,7 +3,7 @@ import pandas_gbq
 import json
 
 #var constante
-key_path = "/home/emerson/codes/python/Dados/projetos_etl/documento/emersondai254-dd3a10e2ae65.json"
+key_path = "/home/emerson/.doc/.service_account_gcp.json"
 
 #Cria a conexão com o bigquery, usando a service account json
 def credentials():

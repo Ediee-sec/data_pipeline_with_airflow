@@ -10,8 +10,8 @@ dic_df = \
         {
             'Id_Trade'        :   [],
             'Moeda'           :   [],
-            'Preco Dolar'     :   [],
-            'Preco Reais'     :   [],
+            'Preco_Dolar'     :   [],
+            'Preco_Reais'     :   [],
             'Volume'          :   [],
             'Tamanho'         :   []
         }
@@ -53,8 +53,8 @@ def ticker():
         #Está função é a que chamaremos nos demais modulos, sempre que quisermos acesso aos dados que foram extraidos
         if ls['ask'] != "0":
             dic_df['Id_Trade'].append(int(ls['trade_id']))
-            dic_df['Preco Dolar'].append(round(float(ls['price']), 4))
-            dic_df['Preco Reais'].append(round(float(ls['price']), 4) * conv_cot) #Utiliza a conversão do dolar para o real de forma atualizada
+            dic_df['Preco_Dolar'].append(round(float(ls['price']), 4))
+            dic_df['Preco_Reais'].append(round(float(ls['price']), 4) * conv_cot) #Utiliza a conversão do dolar para o real de forma atualizada
             dic_df['Volume'].append(round(float(ls['volume']), 10))
             dic_df['Tamanho'].append(round(float(ls['size']), 10))
 
